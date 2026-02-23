@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+        <record id="view_social_hub_account_list" model="ir.ui.view">
+            <field name="name">social.hub.account.list</field>
+            <field name="model">social.hub.account</field>
+            <field name="arch" type="xml">
+                <list string="Accounts">
+                    <field name="name"/>
+                    <field name="platform_id"/>
+                    <field name="handle"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="last_sync_at"/>
+                    <field name="stream_count"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_social_hub_account_form" model="ir.ui.view">
+            <field name="name">social.hub.account.form</field>
+            <field name="model">social.hub.account</field>
+            <field name="arch" type="xml">
+                <form string="Account">
+                    <header>
+                        <button name="action_connect_meta" string="Connect Facebook/Instagram" type="object" class="btn-primary" invisible="platform_code not in ('facebook', 'instagram')" groups="social_hub.group_social_hub_manager"/>
+                        <button name="action_sync_meta_assets" string="Sync Meta Assets" type="object" invisible="platform_code not in ('facebook', 'instagram') or not (meta_user_access_token or access_token)" groups="social_hub.group_social_hub_manager"/>
+                        <button name="action_refresh_meta_token" string="Refresh Meta Token" type="object" invisible="platform_code not in ('facebook', 'instagram') or not meta_user_access_token" groups="social_hub.group_social_hub_manager"/>
+                        <button name="action_mark_connected" string="Mark Connected" type="object" class="btn-primary" invisible="state == 'connected'"/>
+                        <button name="action_mark_disconnected" string="Mark Disconnected" type="object" invisible="state == 'disconnected'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,connected,disconnected"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="platform_id"/>
+                                <field name="handle"/>
+                                <field name="external_uid"/>
+                                <field name="profile_url"/>
+                            </group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="active"/>
+                                <field name="last_sync_at" readonly="1"/>
+                                <field name="token_expires_at" groups="social_hub.group_social_hub_manager"/>
+                                <field name="access_token" password="True" groups="social_hub.group_social_hub_manager"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="OAuth (Manager)" groups="social_hub.group_social_hub_manager">
+                                <group>
+                                    <field name="oauth_provider" readonly="1"/>
+                                    <field name="oauth_state" readonly="1"/>
+                                    <field name="oauth_state_expires_at" readonly="1"/>
+                                    <field name="meta_user_access_token" password="True"/>
+                                    <field name="meta_user_token_expires_at" readonly="1"/>
+                                    <field name="meta_last_refresh_at" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Streams">
+                                <field name="stream_ids">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="stream_type"/>
+                                        <field name="query"/>
+                                        <field name="source_url"/>
+                                        <field name="last_fetch_at"/>
+                                        <field name="last_item_count"/>
+                                        <field name="active"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_social_hub_account_search" model="ir.ui.view">
+            <field name="name">social.hub.account.search</field>
+            <field name="model">social.hub.account</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="handle"/>
+                    <field name="platform_id"/>
+                    <field name="state"/>
+                    <filter name="filter_connected" string="Connected" domain="[('state', '=', 'connected')]"/>
+                    <filter name="filter_disconnected" string="Disconnected" domain="[('state', '=', 'disconnected')]"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_social_hub_account" model="ir.actions.act_window">
+            <field name="name">Accounts</field>
+            <field name="res_model">social.hub.account</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_social_hub_account_search"/>
+        </record>
+
+        <record id="menu_social_hub_account" model="ir.ui.menu">
+            <field name="action" ref="action_social_hub_account"/>
+        </record>
+    </data>
+</odoo>

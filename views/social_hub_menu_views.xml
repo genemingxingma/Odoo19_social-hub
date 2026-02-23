@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <menuitem id="menu_social_hub_root" name="Social Hub" web_icon="social_hub,static/description/icon.svg" sequence="105" groups="base.group_user"/>
+
+        <menuitem id="menu_social_hub_post" name="Posts" parent="menu_social_hub_root" sequence="5"/>
+        <menuitem id="menu_social_hub_account" name="Accounts" parent="menu_social_hub_root" sequence="10"/>
+        <menuitem id="menu_social_hub_stream" name="Streams" parent="menu_social_hub_root" sequence="20"/>
+        <menuitem id="menu_social_hub_config" name="Configuration" parent="menu_social_hub_root" sequence="90" groups="social_hub.group_social_hub_manager"/>
+        <menuitem id="menu_social_hub_platform" name="Platforms" parent="menu_social_hub_config" sequence="10"/>
+    </data>
+</odoo>

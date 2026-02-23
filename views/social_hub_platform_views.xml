@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+        <record id="view_social_hub_platform_list" model="ir.ui.view">
+            <field name="name">social.hub.platform.list</field>
+            <field name="model">social.hub.platform</field>
+            <field name="arch" type="xml">
+                <list string="Platforms">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="supports_streams"/>
+                    <field name="supports_posting"/>
+                    <field name="account_count"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_social_hub_platform_form" model="ir.ui.view">
+            <field name="name">social.hub.platform.form</field>
+            <field name="model">social.hub.platform</field>
+            <field name="arch" type="xml">
+                <form string="Platform">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="supports_streams"/>
+                                <field name="supports_posting"/>
+                                <field name="max_post_length"/>
+                                <field name="icon_url"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Accounts">
+                                <field name="account_ids" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="handle"/>
+                                        <field name="company_id"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_social_hub_platform_search" model="ir.ui.view">
+            <field name="name">social.hub.platform.search</field>
+            <field name="model">social.hub.platform</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                    <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_social_hub_platform" model="ir.actions.act_window">
+            <field name="name">Platforms</field>
+            <field name="res_model">social.hub.platform</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_social_hub_platform_search"/>
+        </record>
+
+        <record id="menu_social_hub_platform" model="ir.ui.menu">
+            <field name="action" ref="action_social_hub_platform"/>
+        </record>
+    </data>
+</odoo>

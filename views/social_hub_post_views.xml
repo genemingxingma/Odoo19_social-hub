@@ -1,0 +1,99 @@
+<odoo>
+    <data>
+        <record id="view_social_hub_post_list" model="ir.ui.view">
+            <field name="name">social.hub.post.list</field>
+            <field name="model">social.hub.post</field>
+            <field name="arch" type="xml">
+                <list string="Posts">
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="platform_id"/>
+                    <field name="media_type"/>
+                    <field name="state"/>
+                    <field name="scheduled_at"/>
+                    <field name="attempt_count"/>
+                    <field name="posted_at"/>
+                    <field name="external_post_id"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_social_hub_post_form" model="ir.ui.view">
+            <field name="name">social.hub.post.form</field>
+            <field name="model">social.hub.post</field>
+            <field name="arch" type="xml">
+                <form string="Post">
+                    <header>
+                        <button name="action_queue_publish" string="Queue Publish" type="object" class="btn-primary" invisible="state in ('posted','queued','processing','canceled')"/>
+                        <button name="action_publish_now" string="Publish Now" type="object" class="btn-primary" invisible="state == 'posted'"/>
+                        <button name="action_cancel" string="Cancel" type="object" invisible="state in ('posted','canceled')"/>
+                        <button name="action_reset_draft" string="Reset Draft" type="object" invisible="state == 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,queued,processing,posted,failed,canceled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="account_id"/>
+                                <field name="platform_id" readonly="1"/>
+                                <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                            </group>
+                            <group>
+                                <field name="media_type"/>
+                                <field name="scheduled_at"/>
+                                <field name="max_attempts"/>
+                                <field name="retry_interval_minutes"/>
+                                <field name="next_retry_at" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="message"/>
+                            <field name="image_url" placeholder="https://... (required for image posts)"/>
+                            <field name="video_url" placeholder="https://... (required for video posts)"/>
+                        </group>
+                        <group>
+                            <field name="attempt_count" readonly="1"/>
+                            <field name="posted_at" readonly="1"/>
+                            <field name="external_post_id" readonly="1"/>
+                            <field name="external_permalink" readonly="1" widget="url"/>
+                            <field name="last_error" readonly="1"/>
+                            <field name="provider_response" readonly="1"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_social_hub_post_search" model="ir.ui.view">
+            <field name="name">social.hub.post.search</field>
+            <field name="model">social.hub.post</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="platform_id"/>
+                    <field name="media_type"/>
+                    <field name="state"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="filter_queued" string="Queued" domain="[('state', '=', 'queued')]"/>
+                    <filter name="filter_posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                    <filter name="filter_failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_social_hub_post" model="ir.actions.act_window">
+            <field name="name">Posts</field>
+            <field name="res_model">social.hub.post</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_social_hub_post_search"/>
+        </record>
+
+        <record id="menu_social_hub_post" model="ir.ui.menu">
+            <field name="action" ref="action_social_hub_post"/>
+        </record>
+    </data>
+</odoo>

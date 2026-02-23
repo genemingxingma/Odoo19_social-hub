@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+        <record id="view_social_hub_stream_list" model="ir.ui.view">
+            <field name="name">social.hub.stream.list</field>
+            <field name="model">social.hub.stream</field>
+            <field name="arch" type="xml">
+                <list string="Streams">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="platform_id"/>
+                    <field name="stream_type"/>
+                    <field name="query"/>
+                    <field name="last_fetch_at"/>
+                    <field name="last_item_count"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_social_hub_stream_form" model="ir.ui.view">
+            <field name="name">social.hub.stream.form</field>
+            <field name="model">social.hub.stream</field>
+            <field name="arch" type="xml">
+                <form string="Stream">
+                    <header>
+                        <button name="action_refresh_stream" string="Refresh Stream" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                                <field name="account_id"/>
+                                <field name="platform_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="stream_type"/>
+                                <field name="query"/>
+                                <field name="source_url"/>
+                                <field name="last_fetch_at" readonly="1"/>
+                                <field name="last_item_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_social_hub_stream_search" model="ir.ui.view">
+            <field name="name">social.hub.stream.search</field>
+            <field name="model">social.hub.stream</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="account_id"/>
+                    <field name="platform_id"/>
+                    <field name="stream_type"/>
+                    <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_social_hub_stream" model="ir.actions.act_window">
+            <field name="name">Streams</field>
+            <field name="res_model">social.hub.stream</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_social_hub_stream_search"/>
+        </record>
+
+        <record id="menu_social_hub_stream" model="ir.ui.menu">
+            <field name="action" ref="action_social_hub_stream"/>
+        </record>
+    </data>
+</odoo>

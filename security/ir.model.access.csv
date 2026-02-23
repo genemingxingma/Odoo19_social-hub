@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_social_hub_platform_user,social.hub.platform.user,model_social_hub_platform,social_hub.group_social_hub_user,1,0,0,0
+access_social_hub_platform_manager,social.hub.platform.manager,model_social_hub_platform,social_hub.group_social_hub_manager,1,1,1,1
+access_social_hub_account_user,social.hub.account.user,model_social_hub_account,social_hub.group_social_hub_user,1,0,0,0
+access_social_hub_account_manager,social.hub.account.manager,model_social_hub_account,social_hub.group_social_hub_manager,1,1,1,1
+access_social_hub_stream_user,social.hub.stream.user,model_social_hub_stream,social_hub.group_social_hub_user,1,0,0,0
+access_social_hub_stream_manager,social.hub.stream.manager,model_social_hub_stream,social_hub.group_social_hub_manager,1,1,1,1
+access_social_hub_post_user,social.hub.post.user,model_social_hub_post,social_hub.group_social_hub_user,1,1,1,0
+access_social_hub_post_manager,social.hub.post.manager,model_social_hub_post,social_hub.group_social_hub_manager,1,1,1,1
+access_social_hub_meta_config_manager,social.hub.meta.config.manager,model_social_hub_meta_config,social_hub.group_social_hub_manager,1,1,1,1
