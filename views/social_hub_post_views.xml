@@ -95,5 +95,10 @@
         <record id="menu_social_hub_post" model="ir.ui.menu">
             <field name="action" ref="action_social_hub_post"/>
         </record>
+
+        <record id="menu_social_hub_root" model="ir.ui.menu">
+            <field name="action" ref="action_social_hub_post"/>
+            <field name="web_icon">social_hub,static/description/icon.png</field>
+        </record>
     </data>
 </odoo>

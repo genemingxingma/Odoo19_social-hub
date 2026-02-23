@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <menuitem id="menu_social_hub_root" name="Social Hub" web_icon="social_hub,static/description/icon.svg" sequence="105" groups="base.group_user"/>
+        <menuitem id="menu_social_hub_root" name="Social Hub" web_icon="social_hub,static/description/icon.png" sequence="105" groups="base.group_user"/>
 
         <menuitem id="menu_social_hub_post" name="Posts" parent="menu_social_hub_root" sequence="5"/>
         <menuitem id="menu_social_hub_account" name="Accounts" parent="menu_social_hub_root" sequence="10"/>
