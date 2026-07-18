@@ -8,5 +8,41 @@
             <field name="name">Social Hub Manager</field>
             <field name="implied_ids" eval="[(4, ref('social_hub.group_social_hub_user'))]"/>
         </record>
+
+        <record id="rule_social_hub_account_company" model="ir.rule">
+            <field name="name">Social Hub accounts by company</field>
+            <field name="model_id" ref="model_social_hub_account"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_social_hub_post_company" model="ir.rule">
+            <field name="name">Social Hub posts by company</field>
+            <field name="model_id" ref="model_social_hub_post"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_social_hub_stream_company" model="ir.rule">
+            <field name="name">Social Hub streams by company</field>
+            <field name="model_id" ref="model_social_hub_stream"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_social_hub_stream_item_company" model="ir.rule">
+            <field name="name">Social Hub stream items by company</field>
+            <field name="model_id" ref="model_social_hub_stream_item"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_social_hub_meta_config_company" model="ir.rule">
+            <field name="name">Social Hub Meta settings by company</field>
+            <field name="model_id" ref="model_social_hub_meta_config"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
+
+    <data>
+        <record id="base.group_system" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('social_hub.group_social_hub_manager'))]"/>
+        </record>
     </data>
 </odoo>

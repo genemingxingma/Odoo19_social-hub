@@ -24,7 +24,7 @@
             <field name="arch" type="xml">
                 <form string="Stream">
                     <header>
-                        <button name="action_refresh_stream" string="Refresh Stream" type="object" class="btn-primary"/>
+                        <button name="action_refresh_stream" string="Refresh Stream" type="object" class="btn-primary" groups="social_hub.group_social_hub_manager"/>
                     </header>
                     <sheet>
                         <group>
@@ -40,12 +40,29 @@
                                 <field name="query"/>
                                 <field name="source_url"/>
                                 <field name="last_fetch_at" readonly="1"/>
+                                <field name="last_success_at" readonly="1"/>
                                 <field name="last_item_count" readonly="1"/>
                             </group>
                         </group>
-                        <group>
-                            <field name="note"/>
-                        </group>
+                        <notebook>
+                            <page string="Items">
+                                <field name="item_ids" readonly="1">
+                                    <list>
+                                        <field name="published_at"/>
+                                        <field name="item_type"/>
+                                        <field name="author_name"/>
+                                        <field name="message"/>
+                                        <field name="permalink" widget="url"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Status">
+                                <group>
+                                    <field name="last_error" readonly="1"/>
+                                    <field name="note"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                     <chatter/>
                 </form>

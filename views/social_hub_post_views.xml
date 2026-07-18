@@ -12,6 +12,7 @@
                     <field name="state"/>
                     <field name="scheduled_at"/>
                     <field name="attempt_count"/>
+                    <field name="processing_started_at" optional="hide"/>
                     <field name="posted_at"/>
                     <field name="external_post_id"/>
                     <field name="active"/>
@@ -26,9 +27,9 @@
                 <form string="Post">
                     <header>
                         <button name="action_queue_publish" string="Queue Publish" type="object" class="btn-primary" invisible="state in ('posted','queued','processing','canceled')"/>
-                        <button name="action_publish_now" string="Publish Now" type="object" class="btn-primary" invisible="state == 'posted'"/>
-                        <button name="action_cancel" string="Cancel" type="object" invisible="state in ('posted','canceled')"/>
-                        <button name="action_reset_draft" string="Reset Draft" type="object" invisible="state == 'draft'"/>
+                        <button name="action_publish_now" string="Publish Now" type="object" class="btn-primary" invisible="state in ('posted','processing','canceled')"/>
+                        <button name="action_cancel" string="Cancel" type="object" invisible="state in ('posted','processing','canceled')"/>
+                        <button name="action_reset_draft" string="Reset Draft" type="object" invisible="state in ('draft','posted','processing')"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,queued,processing,posted,failed,canceled"/>
                     </header>
                     <sheet>
@@ -45,6 +46,7 @@
                                 <field name="max_attempts"/>
                                 <field name="retry_interval_minutes"/>
                                 <field name="next_retry_at" readonly="1"/>
+                                <field name="processing_started_at" readonly="1"/>
                             </group>
                         </group>
                         <group>
@@ -58,7 +60,7 @@
                             <field name="external_post_id" readonly="1"/>
                             <field name="external_permalink" readonly="1" widget="url"/>
                             <field name="last_error" readonly="1"/>
-                            <field name="provider_response" readonly="1"/>
+                            <field name="provider_response" readonly="1" groups="social_hub.group_social_hub_manager"/>
                             <field name="active"/>
                         </group>
                     </sheet>
@@ -99,6 +101,7 @@
         <record id="menu_social_hub_root" model="ir.ui.menu">
             <field name="action" ref="action_social_hub_post"/>
             <field name="web_icon">social_hub,static/description/icon.png</field>
+            <field name="group_ids" eval="[Command.set([ref('social_hub.group_social_hub_user')])]"/>
         </record>
     </data>
 </odoo>

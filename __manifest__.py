@@ -1,7 +1,7 @@
 {
     'name': 'Social Hub',
     'summary': 'Manage social media platforms, accounts and streams without IAP credits',
-    'version': '19.0.4.0.0',
+    'version': '19.0.5.0.0',
     'category': 'Marketing',
     'author': 'mamingxing',
     'company': 'iMyTest',
@@ -17,8 +17,12 @@
         'views/social_hub_account_views.xml',
         'views/social_hub_post_views.xml',
         'views/social_hub_stream_views.xml',
+        'views/social_hub_stream_item_views.xml',
         'views/res_config_settings_views.xml',
     ],
+    'external_dependencies': {
+        'python': ['cryptography'],
+    },
     'application': True,
     'installable': True,
 }

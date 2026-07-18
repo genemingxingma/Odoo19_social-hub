@@ -21,5 +21,16 @@
             <field name="interval_type">hours</field>
             <field name="active">True</field>
         </record>
+
+        <record id="ir_cron_social_hub_refresh_streams" model="ir.cron">
+            <field name="name">Social Hub: Refresh Streams</field>
+            <field name="model_id" ref="model_social_hub_stream"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_refresh_streams()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="active">True</field>
+        </record>
     </data>
 </odoo>

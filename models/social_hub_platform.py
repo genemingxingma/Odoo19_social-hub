@@ -40,6 +40,17 @@ class SocialHubPlatform(models.Model):
         'Platform code must be unique.',
     )
 
+    def init(self):
+        # Capability flags are authoritative provider support, not user preferences.
+        self.env.cr.execute(
+            """
+            UPDATE social_hub_platform
+               SET supports_streams = CASE WHEN code IN ('facebook', 'instagram') THEN TRUE ELSE FALSE END,
+                   supports_posting = CASE WHEN code IN ('facebook', 'instagram') THEN TRUE ELSE FALSE END
+             WHERE code IN ('facebook', 'instagram', 'xiaohongshu', 'tiktok')
+            """
+        )
+
     def _compute_account_count(self):
         for platform in self:
             platform.account_count = len(platform.account_ids)
